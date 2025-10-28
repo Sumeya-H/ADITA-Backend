@@ -1,0 +1,83 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+db.sqlite3
+media/
+staticfiles/
+local_settings.py
+
+# If using Django's collectstatic output directory
+/static/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+.env/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# VS Code
+.vscode/
+
+# PyCharm
+.idea/
+
+# Jupyter notebooks
+.ipynb_checkpoints
+
+# macOS
+.DS_Store
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# pytype
+.pytype/
+
+# coverage and testing
+.coverage
+htmlcov/
+.tox/
+.nox/
+.coverage.*
+.cache
+pytest_cache/
+
+# Sphinx documentation
+docs/_build/
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+*~
+
+# Node (if using frontend tooling)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Docker
+*.pid
+*.seed
+*.pid.lock
+docker-compose.override.yml
+

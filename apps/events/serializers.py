@@ -62,13 +62,12 @@ class EventRegistrationSerializer(serializers.ModelSerializer):
 
         return registration
 
-    def send_confirmation_email(registrant_name, recipient_email, program_name="Digital Skills & Emerging Technologies Training Program"):
+    def send_confirmation_email(self, registrant_name, recipient_email, program_name="Digital Skills & Emerging Technologies Training Program"):
         subject = "Enrollment Confirmation – Adita Academy"
 
         # HTML email content
         html_content = f"""
-    <!DOCTYPE html>
-    <html>
+    cu
     <head>
       <meta charset="UTF-8">
       <title>Enrollment Confirmation</title>

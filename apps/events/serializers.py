@@ -1,6 +1,9 @@
 from rest_framework import serializers
 from .models import EventRegistration, Event
 from apps.registrants.models import Registrant
+from django.core.mail import send_mail
+from uuid import UUID
+
 
 class EventRegistrationSerializer(serializers.ModelSerializer):
     full_name = serializers.CharField(write_only=True)
@@ -12,6 +15,18 @@ class EventRegistrationSerializer(serializers.ModelSerializer):
         exclude = ["registered_at", "registrant"]
 
     def validate(self, data):
+        event_id = data.get("event")
+        try:
+            UUID(str(event_id))
+        except (ValueError, TypeError):
+            raise serializers.ValidationError({"event": "Invalid event ID"})
+
+        # --- Check if registrant already exists and is registered ---
+        email = data.get("email")
+        registrant = Registrant.objects.filter(email=email).first()
+        if registrant and EventRegistration.objects.filter(registrant=registrant, event_id=event_id).exists():
+            raise serializers.ValidationError({"detail": "You have already registered for this event."})
+
         selected_course = data.get("selected_course")
 
         if selected_course == "marketing" and not data.get("marketing_experience"):
@@ -43,7 +58,31 @@ class EventRegistrationSerializer(serializers.ModelSerializer):
             registrant=registrant,
             **validated_data
         )
+
+        self.send_confirmation_email(registrant, event)
+
         return registration
+
+    def send_confirmation_email(self, registrant, event):
+        subject = f"Confirmation for {event.name}"
+        message = (
+            f"Hello {registrant.full_name},\n\n"
+            f"Thank you for registering for {event.name}!\n\n"
+            f"Event Details:\n"
+            f"Date: {event.date}\n"
+            f"Location: {event.location}\n\n"
+            f"We’re excited to have you join us!\n\n"
+            f"– The {event.name} Team"
+        )
+
+        send_mail(
+            subject,
+            message,
+            from_email=None,  # Uses DEFAULT_FROM_EMAIL
+            recipient_list=[registrant.email],
+            fail_silently=False,
+        )
+
 
 class EventSerializer(serializers.ModelSerializer):
     class Meta:

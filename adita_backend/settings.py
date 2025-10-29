@@ -133,6 +133,14 @@ else:
         }
     }
 
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "mail.aditacademy.co"
+EMAIL_PORT = 465
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_HOST_USER = "register@aditacademy.co"
+EMAIL_HOST_PASSWORD = "b5LF]ufoLW@rFnp{"
+DEFAULT_FROM_EMAIL = "Adita Events <noreply@aditacademy.co>"
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators

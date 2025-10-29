@@ -21,8 +21,9 @@ class EventRegistrationSerializer(serializers.ModelSerializer):
 
         # --- Check if registrant already exists and is registered ---
         email = data.get("email")
+        event_id = data.get("event")
         registrant = Registrant.objects.filter(email=email).first()
-        if registrant and EventRegistration.objects.filter(registrant=registrant, event_id=event).exists():
+        if registrant and EventRegistration.objects.filter(registrant=registrant, event_id=event_id).exists():
             raise serializers.ValidationError({"detail": "You have already registered for this event."})
 
         selected_course = data.get("selected_course")

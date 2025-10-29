@@ -132,7 +132,8 @@ if os.getenv("PRODUCTION"):
     EMAIL_USE_SSL = env.bool("EMAIL_USE_SSL")
     EMAIL_HOST_USER = env("EMAIL_HOST_USER")
     EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
-    DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL")
+    DEFAULT_FROM_EMAIL="Adita Academy <noreply@aditacademy.co>"
+
 else:
     # Development: SQLite
     DATABASES = {

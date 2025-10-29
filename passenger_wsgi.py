@@ -1,7 +1,7 @@
 import sys, os
 
 # Path to your project
-project_home = '/home/aditacoq/aidta-backend'
+project_home = '/home/aditacoq/api.aditacademy.co/aidta-backend'
 if project_home not in sys.path:
     sys.path.insert(0, project_home)
 

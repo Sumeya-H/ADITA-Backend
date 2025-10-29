@@ -2,7 +2,6 @@ from rest_framework import serializers
 from .models import EventRegistration, Event
 from apps.registrants.models import Registrant
 from django.core.mail import send_mail
-from uuid import UUID
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from django.template.loader import render_to_string
@@ -19,11 +18,6 @@ class EventRegistrationSerializer(serializers.ModelSerializer):
         exclude = ["registered_at", "registrant"]
 
     def validate(self, data):
-        event_id = data.get("event")
-        try:
-            UUID(str(event_id))
-        except (ValueError, TypeError):
-            raise serializers.ValidationError({"event": "Invalid event ID"})
 
         # --- Check if registrant already exists and is registered ---
         email = data.get("email")

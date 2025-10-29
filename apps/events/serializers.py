@@ -62,7 +62,6 @@ class EventRegistrationSerializer(serializers.ModelSerializer):
 
         return registration
 
-    @staticmethod
     def send_confirmation_email(self, registrant_name, recipient_email, program_name="Digital Skills & Emerging Technologies Training Program"):
         subject = "Enrollment Confirmation – Adita Academy"
 

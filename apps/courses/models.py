@@ -1,7 +1,9 @@
+import uuid
 from django.db import models
 from apps.registrants.models import Registrant
 
 class Course(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     start_date = models.DateField()
@@ -12,6 +14,7 @@ class Course(models.Model):
         return self.name
 
 class CourseRegistration(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     registrant = models.ForeignKey(Registrant, on_delete=models.CASCADE, related_name='course_registrations')
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='registrations')
     registered_at = models.DateTimeField(auto_now_add=True)

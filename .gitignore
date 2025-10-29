@@ -2,6 +2,8 @@
 __pycache__/
 *.py[cod]
 *$py.class
+Piplock
+Piplock.lock
 
 # Django stuff:
 *.log
@@ -18,7 +20,7 @@ local_settings.py
 /static/
 
 # Environment variables
-.env
+.env.production
 .env.local
 .env.*.local
 

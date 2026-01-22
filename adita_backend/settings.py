@@ -146,6 +146,9 @@ if os.getenv("PRODUCTION"):
             'PASSWORD': env('DB_PASSWORD'),
             'HOST': env('DB_HOST'),
             'PORT': env.int('DB_PORT', default=3306),
+            'OPTIONS': {
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            },
         }
     }
     # Email configuration (using django-environ)

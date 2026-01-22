@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 import environ
 from pathlib import Path
+from datetime import timedelta
 import pymysql
 pymysql.install_as_MySQLdb()
 
@@ -30,15 +31,23 @@ if ENV_FILE:
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = 'django-insecure-@e51mj=al&5zo75^14$gdjt=3$w_j=!6^=(ns48q*bfp&n77!)'
-SECRET_KEY = env("SECRET_KEY", default="django-insecure-@e51mj=al&5zo75^14$gdjt=3$w_j=!6^=(ns48q*bfp&n77!)")
+# SECRET_KEY = 'django-insecure-@e51mj=al&5zo75^14$gdjt=3$w_j=!6^=(ns48q*bfp&n77!)'
+SECRET_KEY = env(
+    "SECRET_KEY", default="django-insecure-@e51mj=al&5zo75^14$gdjt=3$w_j=!6^=(ns48q*bfp&n77!)")
+
+MOODLE_URL = "http://localhost"
+MOODLE_ADMIN_TOKEN = "886990b8c104a80adec60fe3876dab65"
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DEBUG", default=True)
 
-#ALLOWED_HOSTS = []
-CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS', default=["http://localhost:3000", "http://127.0.0.1:3000"])
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
+# ALLOWED_HOSTS = []
+CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS', default=[
+                                "http://localhost:3000", "http://127.0.0.1:3000"])
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["*"])
 
 LOG_DIR = os.path.join(BASE_DIR, "logs")
 os.makedirs(LOG_DIR, exist_ok=True)
@@ -62,6 +71,21 @@ LOGGING = {
     },
 }
 
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+}
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -73,9 +97,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
-    'apps.registrants',
-    'apps.events',
+    'apps.users',
     'apps.courses',
+    'apps.events',
 ]
 
 MIDDLEWARE = [
@@ -142,7 +166,10 @@ else:
         }
     }
 
-DEFAULT_FROM_EMAIL="Adita Academy <noreply@aditacademy.co>"
+DEFAULT_FROM_EMAIL = "Adita Academy <noreply@aditacademy.co>"
+
+
+AUTH_USER_MODEL = 'users.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators

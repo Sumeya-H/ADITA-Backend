@@ -1,5 +1,4 @@
 from django.contrib import admin
-from .models import Event, EventRegistration
+from .models import CustomCourseEnrollment
 
-admin.site.register(Event)
-admin.site.register(EventRegistration)
+admin.site.register(CustomCourseEnrollment)

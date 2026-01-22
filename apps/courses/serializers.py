@@ -1,53 +1,71 @@
+# courses/serializers.py
+from django.utils import timezone
 from rest_framework import serializers
-from .models import CourseRegistration, Course
-from apps.registrants.models import Registrant
-from apps.registrants.serializers import RegistrantSerializer
+from .models import CourseRegistration
+from .models import Course
+from apps.users.serializers import StudentReadSerializer, StaffCreateSerializer
 
 
-class CourseRegistrationSerializer(serializers.ModelSerializer):
-    # no nested serializer here
-    first_name = serializers.CharField(write_only=True)
-    last_name = serializers.CharField(write_only=True)
-    email = serializers.EmailField(write_only=True)
-    phone = serializers.CharField(write_only=True)
-    country = serializers.CharField(write_only=True)
-    city = serializers.CharField(write_only=True)
-    background = serializers.CharField(write_only=True, required=False, allow_blank=True)
-    experience = serializers.CharField(write_only=True, required=False, allow_blank=True)
+class CourseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Course
+        fields = [
+            'id',
+            'name',
+            'code',
+            'description',
+            'price',
+        ]
 
-    registrant = RegistrantSerializer(read_only=True)
+
+class CourseRegistrationListSerializer(serializers.ModelSerializer):
+    student = StudentReadSerializer(read_only=True)
+    course = CourseSerializer(read_only=True)
+    finance_approved_by = StaffCreateSerializer(read_only=True)
 
     class Meta:
         model = CourseRegistration
-        fields = [
-            'id', 'course', 'occupation', 'organization', 'experience_years', 'registered_at',
-            # registrant info (write-only)
-            'first_name', 'last_name', 'email', 'phone', 'country', 'city', 'background', 'experience',
-            # output
-            'registrant',
-        ]
+        fields = ["id", "student", "course",
+                  "receipt_image", "finance_approved_by", "status"]
+
+
+class CourseRegistrationCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CourseRegistration
+        fields = ["course", "receipt_image"]
 
     def create(self, validated_data):
-        # Extract registrant info from flat fields
-        registrant_fields = {
-            'first_name': validated_data.pop('first_name'),
-            'last_name': validated_data.pop('last_name'),
-            'email': validated_data.pop('email'),
-            'phone': validated_data.pop('phone'),
-            'country': validated_data.pop('country'),
-            'city': validated_data.pop('city'),
-            'background': validated_data.pop('background', ''),
-            'experience': validated_data.pop('experience', ''),
-        }
-
-        registrant, _ = Registrant.objects.get_or_create(
-            email=registrant_fields['email'],
-            defaults=registrant_fields
-        )
-
-        registration = CourseRegistration.objects.create(
-            registrant=registrant,
+        student = self.context["request"].user.student_profile
+        validated_data.pop("student", None)
+        return CourseRegistration.objects.create(
+            student=student,
             **validated_data
         )
-        return registration
 
+
+class FinanceApprovalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CourseRegistration
+        fields = []
+
+    def update(self, instance, validated_data):
+        staff = self.context["request"].user.staff_profile
+        instance.status = CourseRegistration.FINANCE_APPROVED
+        instance.finance_approved_by = staff
+        instance.finance_approved_at = timezone.now()
+        instance.save()
+        return instance
+
+
+class ManagementApprovalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CourseRegistration
+        fields = []
+
+    def update(self, instance, validated_data):
+        staff = self.context["request"].user.staff_profile
+        instance.status = CourseRegistration.MANAGEMENT_APPROVED
+        instance.management_approved_by = staff
+        instance.management_approved_at = timezone.now()
+        instance.save()
+        return instance

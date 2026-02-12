@@ -64,7 +64,7 @@ from django.template.loader import render_to_string
 def send_course_confirmation_email(self, registrant_name, recipient_email, program_name="Introduction to Artificial Intelligence Course"):
     subject = f"Course Enrollment Confirmation – {program_name}"
 
-    # HTML email content with inline styles for better compatibility with email clients
+    # HTML email content with inline styles
     html_content = f"""
     <!DOCTYPE html>
     <html>
@@ -75,27 +75,38 @@ def send_course_confirmation_email(self, registrant_name, recipient_email, progr
     <body style="font-family: Arial, sans-serif; background-color: #f4f4f9; color: #333333; padding: 20px;">
       <table style="width: 100%; max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; padding: 30px;">
         <tr>
+          <td style="background-color: #0066cc; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0;">
+            <h2 style="font-size: 28px; font-weight: bold;">{program_name}</h2>
+            <p style="font-size: 18px;">Enrollment Confirmation</p>
+          </td>
+        </tr>
+        <tr>
           <td>
-            <h2 style="color: #333333; font-size: 24px; font-weight: bold;">Course Enrollment Confirmation</h2>
             <p style="font-size: 16px; color: #666666;">Dear <strong>{registrant_name},</strong></p>
-            <p style="font-size: 16px; color: #666666;">We are pleased to inform you that your registration for the <strong>Introduction to Artificial Intelligence</strong> course has been successfully received.</p>
+            <p style="font-size: 16px; color: #666666;">We are pleased to inform you that your registration for the <strong>{program_name}</strong> has been successfully received.</p>
 
-            <h3 style="font-size: 18px; font-weight: 600; color: #333333;">Course Details:</h3>
-            <p style="font-size: 16px; color: #666666;"><strong>Duration:</strong> 4 weeks, with 8 hours of training per week.</p>
-            <p style="font-size: 16px; color: #666666;"><strong>Start Date:</strong> <span style="font-weight: bold; color: #0066cc;">Thursday, February 19</span></p>
-            <p style="font-size: 16px; color: #666666;"><strong>Location:</strong> <a href="https://maps.app.goo.gl/9wSnR8WJaHSmFYeH7" style="color: #0066cc;" target="_blank">Federal Technical and Vocational Training Institute (FTVTI)</a> (In-person classes).</p>
-            <p style="font-size: 16px; color: #666666;"><strong>For Online Classes:</strong> You will be provided with the LMS link prior to the start date.</p>
+            <div style="margin-top: 20px;">
+              <h3 style="font-size: 18px; font-weight: 600; color: #333333;">Course Details:</h3>
+              <p style="font-size: 16px; color: #666666;"><strong>Duration:</strong> 4 weeks, with 8 hours of training per week.</p>
+              <p style="font-size: 16px; color: #666666;"><strong>Start Date:</strong> <span style="font-weight: bold; color: #0066cc;">Thursday, February 19</span></p>
+              <p style="font-size: 16px; color: #666666;"><strong>Location:</strong> <a href="https://maps.app.goo.gl/9wSnR8WJaHSmFYeH7" style="color: #0066cc;" target="_blank">Federal Technical and Vocational Training Institute (FTVTI)</a> (In-person classes).</p>
+              <p style="font-size: 16px; color: #666666;"><strong>For Online Classes:</strong> You will be provided with the LMS link prior to the start date.</p>
+            </div>
 
-            <h3 style="font-size: 18px; font-weight: 600; color: #333333;">Payment Details:</h3>
-            <ul style="font-size: 16px; color: #666666; padding-left: 20px;">
-              <li><strong>Original Course Fee:</strong> <span style="font-weight: bold; color: #0066cc;">10,000 Birr</span></li>
-              <li><strong>Promotional Discount:</strong> <span style="font-weight: bold; color: #0066cc;">25%</span></li>
-              <li><strong>Final Discounted Price:</strong> <span style="font-weight: bold; color: #0066cc;">7,500 Birr</span></li>
-              <li><strong>Bank:</strong> Bank of Abyssinia</li>
-              <li><strong>Account Name:</strong> AFIRICAN DIGITAL AND INNOVATION TECHNOLOGY ACADEMY</li>
-              <li><strong>Account Number:</strong> 229456048</li>
-            </ul>
-            <p style="font-size: 16px; color: #666666;">After making the payment, kindly send a payment screenshot to our Telegram account: <a href="https://t.me/adit_academy?direct" style="color: #0066cc;" target="_blank">@adit_academy</a></p>
+            <div style="margin-top: 20px;">
+              <h3 style="font-size: 18px; font-weight: 600; color: #333333;">Payment Details:</h3>
+              <ul style="font-size: 16px; color: #666666; padding-left: 20px;">
+                <li><strong>Original Course Fee:</strong> <span style="font-weight: bold; color: #0066cc;">10,000 Birr</span></li>
+                <li><strong>Promotional Discount:</strong> <span style="font-weight: bold; color: #0066cc;">25%</span></li>
+                <li><strong>Final Discounted Price:</strong> <span style="font-weight: bold; color: #0066cc;">7,500 Birr</span></li>
+                <li><strong>Bank:</strong> Bank of Abyssinia</li>
+                <li><strong>Account Name:</strong> AFIRICAN DIGITAL AND INNOVATION TECHNOLOGY ACADEMY</li>
+                <li><strong>Account Number:</strong> 229456048</li>
+              </ul>
+              <p style="font-size: 16px; color: #666666;">After making the payment, kindly send a payment screenshot to our Telegram account: <a href="https://t.me/adit_academy?direct" style="color: #0066cc;" target="_blank">@adit_academy</a></p>
+            </div>
+
+            <a href="https://t.me/adit_academy?direct" style="display: inline-block; background-color: #0066cc; color: #ffffff; font-size: 16px; font-weight: bold; padding: 12px 20px; border-radius: 5px; text-align: center; text-decoration: none; margin-top: 20px;" target="_blank">Confirm Payment</a>
 
             <div style="font-size: 14px; text-align: center; color: #999999; margin-top: 20px;">
               <p>© 2025 Adita Academy. All rights reserved.</p>
@@ -103,6 +114,7 @@ def send_course_confirmation_email(self, registrant_name, recipient_email, progr
           </td>
         </tr>
       </table>
+
     </body>
     </html>
     """

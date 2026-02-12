@@ -8,20 +8,19 @@ class Command(BaseCommand):
     help = 'Send enrollment confirmation emails to all registered users'
 
     def handle(self, *args, **kwargs):
-        # users = CustomCourseEnrollment.objects.filter(is_registered=True)
+        users = CustomCourseEnrollment.objects.all()
 
-        # for user in users:
-        #    # Call the function to send the confirmation email
-        #    self.stdout.write(
-        #        f"Sending email to {user.name} ({user.email})...")
-        #    # Calls your existing email function
-        #    send_course_confirmation_email(None, user.name, user.email)
-        #    self.stdout.write(self.style.SUCCESS(
-        #        f"Successfully sent email to {user.name}"))
-        self.stdout.write(
-            f"Sending email to Kalab Kassa kalabkassa@gmail.com ...")
+        for user in users:
+            registrant_name = f"{user.first_name} {user.last_name}"
+            self.stdout.write(
+                f"Sending email to {registrant_name} ({user.email})...")
+            send_course_confirmation_email(None, registrant_name, user.email)
+            self.stdout.write(self.style.SUCCESS(
+                f"Successfully sent email to {registrant_name}"))
+        # self.stdout.write(
+        #    f"Sending email to Kalab Kassa kalabkassa@gmail.com ...")
         # Calls your existing email function
-        send_course_confirmation_email(
-            None, "Kalab Kassa", "kalabkassa@gmail.com")
-        self.stdout.write(self.style.SUCCESS(
-            f"Successfully sent email to kalab kassa"))
+        # send_course_confirmation_email(
+        #    None, "Kalab Kassa", "kalabkassa@gmail.com")
+        # self.stdout.write(self.style.SUCCESS(
+        #    f"Successfully sent email to kalab kassa"))

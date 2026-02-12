@@ -71,68 +71,103 @@ def send_course_confirmation_email(self, registrant_name, recipient_email, progr
     <head>
       <meta charset="UTF-8">
       <title>Course Enrollment Confirmation</title>
+      <style>
+        /* Basic reset for consistent rendering across email clients */
+        body, h1, h2, h3, p, ul, li {
+          margin: 0;
+          padding: 0;
+        }
+        body {
+          font-family: Arial, sans-serif;
+          background-color: #f4f4f9; /* Light neutral background */
+          color: #333333; /* Dark gray text for better contrast */
+          padding: 20px;
+        }
+        a {
+          color: #0066cc; /* Soft blue for links */
+          text-decoration: none;
+        }
+        table {
+          width: 100%;
+          max-width: 600px;
+          margin: 0 auto;
+          background-color: #ffffff; /* White background for the content */
+          border-radius: 8px;
+          padding: 30px;
+        }
+        h1, h2, h3 {
+          color: #333333; /* Dark gray for headings */
+        }
+        h2 {
+          font-size: 24px;
+          font-weight: bold;
+        }
+        h3 {
+          font-size: 18px;
+          font-weight: 600;
+        }
+        p {
+          font-size: 16px;
+          color: #666666; /* Slightly lighter gray for body text */
+          line-height: 1.5;
+        }
+        ul {
+          font-size: 16px;
+          color: #666666;
+        }
+        li {
+          margin-bottom: 10px;
+        }
+        .highlight {
+          font-weight: bold;
+          color: #0066cc; /* Blue for highlights like dates or prices */
+        }
+        .footer {
+          font-size: 14px;
+          text-align: center;
+          color: #999999; /* Light gray for footer text */
+          margin-top: 20px;
+        }
+        .cta-link {
+          font-weight: bold;
+          color: #0066cc;
+          text-decoration: none;
+        }
+      </style>
     </head>
-    <body style="font-family: Arial, sans-serif; background-color: #f7e8cb; margin:0; padding:0;">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0" style="padding: 20px 0; background-color:#f7e8cb;">
+    <body>
+
+      <table>
         <tr>
-          <td align="center">
-            <table width="600" cellpadding="0" cellspacing="0" border="0" style="background-color:#ffffff; border-radius:8px; padding:40px;">
-              <!-- Header with Checkmark -->
-              <tr>
-                <td align="center" style="padding-bottom:20px;">
-                  <div style="width:64px; height:64px; background-color:#4CAF50; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:36px; color:#ffffff;">
-                    <span style="font-size:38px;">&#10003;</span> <!-- Check mark icon -->
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td align="center" style="font-size:24px; font-weight:bold; color:#6b2e12; padding-bottom:10px;">
-                  Registration Received – Introduction to AI Course
-                </td>
-              </tr>
-              <tr>
-                <td align="center" style="font-size:16px; color:#6b2e12; padding-bottom:20px;">
-                  <strong>Dear {registrant_name},</strong><br><br>
-                  We are pleased to inform you that your registration for the <strong>Introduction to Artificial Intelligence</strong> course has been successfully received.
-                </td>
-              </tr>
-              <!-- Course Details -->
-              <tr>
-                <td style="background-color:#f7e8cb; border-radius:8px; padding:20px;">
-                  <h3 style="font-size:18px; font-weight:600; color:#6b2e12; margin-top:0;">Course Details:</h3>
-                  <p style="font-size:16px; color:#6b2e12;">
-                    <strong>Duration:</strong> 4 weeks, with 8 hours of training per week.<br>
-                    <strong>Start Date:</strong> Thursday, February 19.<br>
-                    <strong>Location:</strong> <a href="https://maps.app.goo.gl/9wSnR8WJaHSmFYeH7" style="color:#b25114;">Federal Technical and Vocational Training Institute (FTVTI)</a> (In-person classes).<br>
-                    <strong>For Online Classes:</strong> You will be provided with the LMS link prior to the start date.
-                  </p>
-                </td>
-              </tr>
-              <!-- Payment Details -->
-              <tr>
-                <td style="background-color:#f7e8cb; border-radius:8px; padding:20px;">
-                  <h3 style="font-size:18px; font-weight:600; color:#6b2e12; margin-top:0;">Payment Details:</h3>
-                  <ul style="list-style:none; padding-left:0; margin:0; font-size:16px; color:#6b2e12;">
-                    <li><strong>Original Course Fee:</strong> 10,000 Birr</li>
-                    <li><strong>Promotional Discount:</strong> 25%</li>
-                    <li><strong>Final Discounted Price:</strong> 7,500 Birr</li>
-                    <li><strong>Bank:</strong> Bank of Abyssinia</li>
-                    <li><strong>Account Name:</strong> AFIRICAN DIGITAL AND INNOVATION TECHNOLOGY ACADEMY</li>
-                    <li><strong>Account Number:</strong> 229456048</li>
-                  </ul>
-                  <p style="font-size:16px; color:#6b2e12;">After making the payment, kindly send a payment screenshot to our Telegram account: <a href="https://t.me/adit_academy?direct" style="color:#b25114;">@adit_academy</a></p>
-                </td>
-              </tr>
-              <!-- Footer -->
-              <tr>
-                <td align="center" style="padding-top:30px; font-size:14px; color:#b25114;">
-                  © 2025 Adita Academy. All rights reserved.
-                </td>
-              </tr>
-            </table>
+          <td>
+            <h2>Course Enrollment Confirmation</h2>
+            <p>Dear <strong>{registrant_name},</strong></p>
+            <p>We are pleased to inform you that your registration for the <strong>Introduction to Artificial Intelligence</strong> course has been successfully received.</p>
+
+            <h3>Course Details:</h3>
+            <p><strong>Duration:</strong> 4 weeks, with 8 hours of training per week.</p>
+            <p><strong>Start Date:</strong> <span class="highlight">Thursday, February 19</span></p>
+            <p><strong>Location:</strong> <a href="https://maps.app.goo.gl/9wSnR8WJaHSmFYeH7" class="cta-link" target="_blank">Federal Technical and Vocational Training Institute (FTVTI)</a> (In-person classes).</p>
+            <p><strong>For Online Classes:</strong> You will be provided with the LMS link prior to the start date.</p>
+
+            <h3>Payment Details:</h3>
+            <ul>
+              <li><strong>Original Course Fee:</strong> <span class="highlight">10,000 Birr</span></li>
+              <li><strong>Promotional Discount:</strong> <span class="highlight">25%</span></li>
+              <li><strong>Final Discounted Price:</strong> <span class="highlight">7,500 Birr</span></li>
+              <li><strong>Bank:</strong> Bank of Abyssinia</li>
+              <li><strong>Account Name:</strong> AFIRICAN DIGITAL AND INNOVATION TECHNOLOGY ACADEMY</li>
+              <li><strong>Account Number:</strong> 229456048</li>
+            </ul>
+            <p>After making the payment, kindly send a payment screenshot to our Telegram account: <a href="https://t.me/adit_academy?direct" class="cta-link" target="_blank">@adit_academy</a></p>
+
+            <div class="footer">
+              <p>© 2025 Adita Academy. All rights reserved.</p>
+            </div>
           </td>
         </tr>
       </table>
+
     </body>
     </html>
     """

@@ -64,7 +64,7 @@ from django.template.loader import render_to_string
 def send_course_confirmation_email(self, registrant_name, recipient_email, program_name="Introduction to Artificial Intelligence Course"):
     subject = f"Course Enrollment Confirmation – {program_name}"
 
-    # HTML email content with inline styles
+    # HTML email content with inline styles and background image
     html_content = f"""
     <!DOCTYPE html>
     <html>
@@ -75,9 +75,11 @@ def send_course_confirmation_email(self, registrant_name, recipient_email, progr
     <body style="font-family: Arial, sans-serif; background-color: #f4f4f9; color: #333333; padding: 20px;">
       <table style="width: 100%; max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; padding: 30px;">
         <tr>
-          <td style="background-color: #0066cc; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0;">
-            <h2 style="font-size: 28px; font-weight: bold;">{program_name}</h2>
-            <p style="font-size: 18px;">Enrollment Confirmation</p>
+          <td style="background-image: url('https://aditacademy.co/images/courses/introduction-to-artificial-intelligence.webp'); background-size: cover; background-position: center; color: white; padding: 60px 20px; text-align: center; border-radius: 8px 8px 0 0; position: relative;">
+            <!-- Overlay to ensure readability -->
+            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); border-radius: 8px 8px 0 0;"></div>
+            <h2 style="font-size: 28px; font-weight: bold; z-index: 1; position: relative;">{program_name}</h2>
+            <p style="font-size: 18px; z-index: 1; position: relative;">Enrollment Confirmation</p>
           </td>
         </tr>
         <tr>

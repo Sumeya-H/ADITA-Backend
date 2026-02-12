@@ -60,8 +60,9 @@ from django.template.loader import render_to_string
 #
 #        return registration
 
-def send_confirmation_email(self, registrant_name, recipient_email, program_name="Digital Skills & Emerging Technologies Training Program"):
-    subject = "Enrollment Confirmation – Adita Academy"
+
+def send_course_confirmation_email(self, registrant_name, recipient_email, program_name="Introduction to Artificial Intelligence Course"):
+    subject = f"Course Enrollment Confirmation – {program_name}"
 
     # HTML email content
     html_content = f"""
@@ -69,7 +70,7 @@ def send_confirmation_email(self, registrant_name, recipient_email, program_name
     <html>
     <head>
       <meta charset="UTF-8">
-      <title>Enrollment Confirmation</title>
+      <title>Course Enrollment Confirmation</title>
     </head>
     <body style="font-family: Arial, sans-serif; background-color: #f7e8cb; margin:0; padding:0;">
       <table width="100%" cellpadding="0" cellspacing="0" border="0" style="padding: 20px 0; background-color:#f7e8cb;">
@@ -85,22 +86,38 @@ def send_confirmation_email(self, registrant_name, recipient_email, program_name
               </tr>
               <tr>
                 <td align="center" style="font-size:24px; font-weight:bold; color:#6b2e12; padding-bottom:10px;">
-                  Enrollment Successful!
+                  Registration Received – Introduction to AI Course
                 </td>
               </tr>
               <tr>
                 <td align="center" style="font-size:16px; color:#6b2e12; padding-bottom:20px;">
                   Hi {registrant_name},<br>
-                  Thank you for enrolling in the <strong>{program_name}</strong>. Your enrollment has been confirmed.
+                  We are pleased to inform you that your registration for the <strong>Introduction to Artificial Intelligence</strong> course has been successfully received.
                 </td>
               </tr>
               <tr>
                 <td style="background-color:#f7e8cb; border-radius:8px; padding:20px;">
-                  <h3 style="font-size:18px; font-weight:600; color:#6b2e12; margin-top:0;">Next Steps:</h3>
+                  <h3 style="font-size:18px; font-weight:600; color:#6b2e12; margin-top:0;">Course Details:</h3>
+                  <p style="font-size:16px; color:#6b2e12;">
+                    <strong>Duration:</strong> 4 weeks, with 8 hours of training per week.<br>
+                    <strong>Start Date:</strong> Thursday, February 19.<br>
+                    <strong>Location:</strong> <a href="https://maps.app.goo.gl/9wSnR8WJaHSmFYeH7" style="color:#b25114;">Federal Technical and Vocational Training Institute (FTVTI)</a> (In-person classes).<br>
+                    <strong>For Online Classes:</strong> You will be provided with the LMS link prior to the start date.
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td style="background-color:#f7e8cb; border-radius:8px; padding:20px;">
+                  <h3 style="font-size:18px; font-weight:600; color:#6b2e12; margin-top:0;">Payment Details:</h3>
                   <ul style="list-style:none; padding-left:0; margin:0; font-size:16px; color:#6b2e12;">
-                    <li style="margin-bottom:10px;">✔️ Check your email for enrollment confirmation and program details</li>
-                    <li style="margin-bottom:10px;">✔️ Join the orientation session (details will be emailed)</li>
+                    <li><strong>Original Course Fee:</strong> 10,000 Birr</li>
+                    <li><strong>Promotional Discount:</strong> 25%</li>
+                    <li><strong>Final Discounted Price:</strong> 7,500 Birr</li>
+                    <li><strong>Bank:</strong> Bank of Abyssinia</li>
+                    <li><strong>Account Name:</strong> AFIRICAN DIGITAL AND INNOVATION TECHNOLOGY ACADEMY</li>
+                    <li><strong>Account Number:</strong> 229456048</li>
                   </ul>
+                  <p style="font-size:16px; color:#6b2e12;">After making the payment, kindly send a payment screenshot to our Telegram account: <a href="https://t.me/adit_academy?direct" style="color:#b25114;">@adit_academy</a></p>
                 </td>
               </tr>
               <tr>
@@ -114,11 +131,35 @@ def send_confirmation_email(self, registrant_name, recipient_email, program_name
       </table>
     </body>
     </html>
-        """
+    """
 
     # Optional plain text fallback
-    text_content = f"Hi {registrant_name},\n\nThank you for enrolling in {program_name}. Your enrollment has been confirmed.\n\nNext steps:\n- Check your email for enrollment confirmation and program details\n- Join the orientation session (details will be emailed)\n\n© 2025 Adita Academy"
+    text_content = f"""
+    Hi {registrant_name},
 
+    We are pleased to inform you that your registration for the Introduction to Artificial Intelligence course has been successfully received.
+
+    Course Details:
+    Duration: 4 weeks, with 8 hours of training per week
+    Start Date: Thursday, February 19
+    Location: Federal Technical and Vocational Training Institute (FTVTI) (In-person classes)
+    For Online Classes: You will be provided with the LMS link prior to the start date.
+
+    Payment Details:
+    Original Course Fee: 10,000 Birr
+    Promotional Discount: 25%
+    Final Discounted Price: 7,500 Birr
+
+    Bank: Bank of Abyssinia
+    Account Name: AFIRICAN DIGITAL AND INNOVATION TECHNOLOGY ACADEMY
+    Account Number: 229456048
+
+    After making the payment, kindly send a payment screenshot to our Telegram account: @adit_academy
+
+    © 2025 Adita Academy. All rights reserved.
+    """
+
+    # Sending the email
     email = EmailMultiAlternatives(
         subject=subject,
         body=text_content,

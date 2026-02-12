@@ -77,10 +77,11 @@ def send_course_confirmation_email(self, registrant_name, recipient_email, progr
         <tr>
           <td align="center">
             <table width="600" cellpadding="0" cellspacing="0" border="0" style="background-color:#ffffff; border-radius:8px; padding:40px;">
+              <!-- Header with Checkmark -->
               <tr>
                 <td align="center" style="padding-bottom:20px;">
-                  <div style="width:64px; height:64px; background-color:#b25114; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:32px; color:#ffffff;">
-                    ✔️
+                  <div style="width:64px; height:64px; background-color:#4CAF50; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:36px; color:#ffffff;">
+                    <span style="font-size:38px;">&#10003;</span> <!-- Check mark icon -->
                   </div>
                 </td>
               </tr>
@@ -91,10 +92,11 @@ def send_course_confirmation_email(self, registrant_name, recipient_email, progr
               </tr>
               <tr>
                 <td align="center" style="font-size:16px; color:#6b2e12; padding-bottom:20px;">
-                  Hi {registrant_name},<br>
+                  <strong>Dear {registrant_name},</strong><br><br>
                   We are pleased to inform you that your registration for the <strong>Introduction to Artificial Intelligence</strong> course has been successfully received.
                 </td>
               </tr>
+              <!-- Course Details -->
               <tr>
                 <td style="background-color:#f7e8cb; border-radius:8px; padding:20px;">
                   <h3 style="font-size:18px; font-weight:600; color:#6b2e12; margin-top:0;">Course Details:</h3>
@@ -106,6 +108,7 @@ def send_course_confirmation_email(self, registrant_name, recipient_email, progr
                   </p>
                 </td>
               </tr>
+              <!-- Payment Details -->
               <tr>
                 <td style="background-color:#f7e8cb; border-radius:8px; padding:20px;">
                   <h3 style="font-size:18px; font-weight:600; color:#6b2e12; margin-top:0;">Payment Details:</h3>
@@ -120,6 +123,7 @@ def send_course_confirmation_email(self, registrant_name, recipient_email, progr
                   <p style="font-size:16px; color:#6b2e12;">After making the payment, kindly send a payment screenshot to our Telegram account: <a href="https://t.me/adit_academy?direct" style="color:#b25114;">@adit_academy</a></p>
                 </td>
               </tr>
+              <!-- Footer -->
               <tr>
                 <td align="center" style="padding-top:30px; font-size:14px; color:#b25114;">
                   © 2025 Adita Academy. All rights reserved.

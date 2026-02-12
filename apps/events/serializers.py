@@ -64,110 +64,45 @@ from django.template.loader import render_to_string
 def send_course_confirmation_email(self, registrant_name, recipient_email, program_name="Introduction to Artificial Intelligence Course"):
     subject = f"Course Enrollment Confirmation – {program_name}"
 
-    # HTML email content
+    # HTML email content with inline styles for better compatibility with email clients
     html_content = f"""
     <!DOCTYPE html>
     <html>
     <head>
       <meta charset="UTF-8">
       <title>Course Enrollment Confirmation</title>
-      <style>
-        /* Basic reset for consistent rendering across email clients */
-        body, h1, h2, h3, p, ul, li {
-          margin: 0;
-          padding: 0;
-        }
-        body {
-          font-family: Arial, sans-serif;
-          background-color: #f4f4f9; /* Light neutral background */
-          color: #333333; /* Dark gray text for better contrast */
-          padding: 20px;
-        }
-        a {
-          color: #0066cc; /* Soft blue for links */
-          text-decoration: none;
-        }
-        table {
-          width: 100%;
-          max-width: 600px;
-          margin: 0 auto;
-          background-color: #ffffff; /* White background for the content */
-          border-radius: 8px;
-          padding: 30px;
-        }
-        h1, h2, h3 {
-          color: #333333; /* Dark gray for headings */
-        }
-        h2 {
-          font-size: 24px;
-          font-weight: bold;
-        }
-        h3 {
-          font-size: 18px;
-          font-weight: 600;
-        }
-        p {
-          font-size: 16px;
-          color: #666666; /* Slightly lighter gray for body text */
-          line-height: 1.5;
-        }
-        ul {
-          font-size: 16px;
-          color: #666666;
-        }
-        li {
-          margin-bottom: 10px;
-        }
-        .highlight {
-          font-weight: bold;
-          color: #0066cc; /* Blue for highlights like dates or prices */
-        }
-        .footer {
-          font-size: 14px;
-          text-align: center;
-          color: #999999; /* Light gray for footer text */
-          margin-top: 20px;
-        }
-        .cta-link {
-          font-weight: bold;
-          color: #0066cc;
-          text-decoration: none;
-        }
-      </style>
     </head>
-    <body>
-
-      <table>
+    <body style="font-family: Arial, sans-serif; background-color: #f4f4f9; color: #333333; padding: 20px;">
+      <table style="width: 100%; max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; padding: 30px;">
         <tr>
           <td>
-            <h2>Course Enrollment Confirmation</h2>
-            <p>Dear <strong>{registrant_name},</strong></p>
-            <p>We are pleased to inform you that your registration for the <strong>Introduction to Artificial Intelligence</strong> course has been successfully received.</p>
+            <h2 style="color: #333333; font-size: 24px; font-weight: bold;">Course Enrollment Confirmation</h2>
+            <p style="font-size: 16px; color: #666666;">Dear <strong>{registrant_name},</strong></p>
+            <p style="font-size: 16px; color: #666666;">We are pleased to inform you that your registration for the <strong>Introduction to Artificial Intelligence</strong> course has been successfully received.</p>
 
-            <h3>Course Details:</h3>
-            <p><strong>Duration:</strong> 4 weeks, with 8 hours of training per week.</p>
-            <p><strong>Start Date:</strong> <span class="highlight">Thursday, February 19</span></p>
-            <p><strong>Location:</strong> <a href="https://maps.app.goo.gl/9wSnR8WJaHSmFYeH7" class="cta-link" target="_blank">Federal Technical and Vocational Training Institute (FTVTI)</a> (In-person classes).</p>
-            <p><strong>For Online Classes:</strong> You will be provided with the LMS link prior to the start date.</p>
+            <h3 style="font-size: 18px; font-weight: 600; color: #333333;">Course Details:</h3>
+            <p style="font-size: 16px; color: #666666;"><strong>Duration:</strong> 4 weeks, with 8 hours of training per week.</p>
+            <p style="font-size: 16px; color: #666666;"><strong>Start Date:</strong> <span style="font-weight: bold; color: #0066cc;">Thursday, February 19</span></p>
+            <p style="font-size: 16px; color: #666666;"><strong>Location:</strong> <a href="https://maps.app.goo.gl/9wSnR8WJaHSmFYeH7" style="color: #0066cc;" target="_blank">Federal Technical and Vocational Training Institute (FTVTI)</a> (In-person classes).</p>
+            <p style="font-size: 16px; color: #666666;"><strong>For Online Classes:</strong> You will be provided with the LMS link prior to the start date.</p>
 
-            <h3>Payment Details:</h3>
-            <ul>
-              <li><strong>Original Course Fee:</strong> <span class="highlight">10,000 Birr</span></li>
-              <li><strong>Promotional Discount:</strong> <span class="highlight">25%</span></li>
-              <li><strong>Final Discounted Price:</strong> <span class="highlight">7,500 Birr</span></li>
+            <h3 style="font-size: 18px; font-weight: 600; color: #333333;">Payment Details:</h3>
+            <ul style="font-size: 16px; color: #666666; padding-left: 20px;">
+              <li><strong>Original Course Fee:</strong> <span style="font-weight: bold; color: #0066cc;">10,000 Birr</span></li>
+              <li><strong>Promotional Discount:</strong> <span style="font-weight: bold; color: #0066cc;">25%</span></li>
+              <li><strong>Final Discounted Price:</strong> <span style="font-weight: bold; color: #0066cc;">7,500 Birr</span></li>
               <li><strong>Bank:</strong> Bank of Abyssinia</li>
               <li><strong>Account Name:</strong> AFIRICAN DIGITAL AND INNOVATION TECHNOLOGY ACADEMY</li>
               <li><strong>Account Number:</strong> 229456048</li>
             </ul>
-            <p>After making the payment, kindly send a payment screenshot to our Telegram account: <a href="https://t.me/adit_academy?direct" class="cta-link" target="_blank">@adit_academy</a></p>
+            <p style="font-size: 16px; color: #666666;">After making the payment, kindly send a payment screenshot to our Telegram account: <a href="https://t.me/adit_academy?direct" style="color: #0066cc;" target="_blank">@adit_academy</a></p>
 
-            <div class="footer">
+            <div style="font-size: 14px; text-align: center; color: #999999; margin-top: 20px;">
               <p>© 2025 Adita Academy. All rights reserved.</p>
             </div>
           </td>
         </tr>
       </table>
-
     </body>
     </html>
     """

@@ -15,6 +15,7 @@ db.sqlite3
 media/
 staticfiles/
 local_settings.py
+*/migrations/
 
 # If using Django's collectstatic output directory
 /static/

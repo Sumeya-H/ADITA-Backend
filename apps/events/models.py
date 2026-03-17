@@ -1,6 +1,7 @@
 import uuid
 from django.db import models
-from django.contrib.postgres.fields import JSONField  # or use models.JSONField in Django 3.1+
+# or use models.JSONField in Django 3.1+
+from django.contrib.postgres.fields import JSONField
 
 # class Event(models.Model):
 #     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -68,7 +69,6 @@ from django.contrib.postgres.fields import JSONField  # or use models.JSONField 
 #         return f"{self.registrant} -> {self.event.name}"
 
 
-
 class CustomCourseEnrollment(models.Model):
     EXPERIENCE_CHOICES = [
         ("none", "No experience"),
@@ -95,6 +95,20 @@ class CustomCourseEnrollment(models.Model):
         ("other", "Other"),
     ]
 
+    # ✅ NEW
+    MODE_CHOICES = [
+        ("online", "Online"),
+        ("hybrid", "Hybrid"),
+        ("in-person", "In-Person"),
+    ]
+
+    # ✅ NEW
+    LOCATION_CHOICES = [
+        ("aastu", "Addis Ababa Science and Technology University"),
+        ("ict-park", "ICT Park"),
+        ("fdre-tvt", "FDRE TVT Institute"),
+    ]
+
     program = models.CharField(max_length=255)
 
     first_name = models.CharField(max_length=100)
@@ -110,6 +124,15 @@ class CustomCourseEnrollment(models.Model):
 
     goals = models.TextField(blank=True)
     referral = models.CharField(max_length=50, choices=REFERRAL_CHOICES)
+
+    # ✅ NEW FIELDS
+    mode = models.CharField(max_length=20, choices=MODE_CHOICES)
+    location = models.CharField(
+        max_length=50,
+        choices=LOCATION_CHOICES,
+        blank=True,
+        null=True
+    )
 
     agreed_terms = models.BooleanField(default=False)
 

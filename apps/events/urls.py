@@ -1,9 +1,9 @@
 from django.urls import path
-from .views import EnrollmentCreateView
+from .views import EventRegistrationListCreateView, EnrollmentCreateView
 
 urlpatterns = [
-    # path("register/", EventRegistrationCreateView.as_view(), name="event-register"),
-    # path("list/", EventListView.as_view(), name="event-list"),
     path("enrollments/", EnrollmentCreateView.as_view(),
          name="enrollment-create"),
+    path("registrations/", EventRegistrationListCreateView.as_view(),
+         name="registrations"),
 ]

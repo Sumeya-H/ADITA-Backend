@@ -1,16 +1,13 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import EnrollmentSerializer
+from .serializers import EnrollmentSerializer, EventRegistrationSerializer
+from .models import EventRegistration
 
 
-# class EventRegistrationCreateView(generics.CreateAPIView):
-#     queryset = EventRegistration.objects.all()
-#     serializer_class = EventRegistrationSerializer
-#
-# class EventListView(generics.ListAPIView):
-#     queryset = Event.objects.all()
-#     serializer_class = EventSerializer
+class EventRegistrationListCreateView(generics.ListCreateAPIView):
+    queryset = EventRegistration.objects.all().order_by("-registered_at")
+    serializer_class = EventRegistrationSerializer
 
 
 class EnrollmentCreateView(APIView):

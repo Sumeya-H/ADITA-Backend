@@ -1,64 +1,22 @@
 from rest_framework import serializers
-from .models import CustomCourseEnrollment
+from .models import CustomCourseEnrollment, EventRegistration
 from django.core.mail import send_mail
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from django.template.loader import render_to_string
 
 
-# class EventRegistrationSerializer(serializers.ModelSerializer):
-#    full_name = serializers.CharField(write_only=True)
-#    email = serializers.EmailField(write_only=True)
-#    phone = serializers.CharField(write_only=True, required=False, allow_blank=True)
-#
-#    class Meta:
-#        model = EventRegistration
-#        exclude = ["registered_at", "registrant"]
-#
-#    def validate(self, data):
-#
-#        # --- Check if registrant already exists and is registered ---
-#        email = data.get("email")
-#        event_id = data.get("event")
-#        registrant = Registrant.objects.filter(email=email).first()
-#        if registrant and EventRegistration.objects.filter(registrant=registrant, event_id=event_id).exists():
-#            raise serializers.ValidationError({"detail": "You have already registered for this event."})
-#
-#        selected_course = data.get("selected_course")
-#
-#        if selected_course == "marketing" and not data.get("marketing_experience"):
-#            raise serializers.ValidationError(
-#                {"marketing_experience": "This field is required for Marketing course."}
-#            )
-#
-#        if selected_course == "ai" and data.get("programming_experience") == "none":
-#            raise serializers.ValidationError(
-#                {"programming_experience": "Programming experience is required for AI course."}
-#            )
-#
-#        return data
-#
-#    def create(self, validated_data):
-#        # Extract registrant info from validated_data
-#        full_name = validated_data.pop("full_name")
-#        email = validated_data.pop("email")
-#        phone = validated_data.pop("phone", "")
-#
-#        # Either get existing registrant or create a new one
-#        registrant, created = Registrant.objects.get_or_create(
-#            email=email,
-#            defaults={"full_name": full_name, "phone": phone}
-#        )
-#
-#        # Create the event registration linked to this registrant
-#        registration = EventRegistration.objects.create(
-#            registrant=registrant,
-#            **validated_data
-#        )
-#
-#        self.send_confirmation_email(registrant.full_name, registrant.email)
-#
-#        return registration
+class EventRegistrationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EventRegistration
+        fields = "__all__"
+        read_only_fields = ["id", "registered_at"]
+
+    def validate_email(self, value):
+        if EventRegistration.objects.filter(email=value).exists():
+            raise serializers.ValidationError(
+                "This email is already registered.")
+        return value
 
 
 def send_course_confirmation_email(self, registrant_name, recipient_email, program_name="Introduction to Artificial Intelligence Course"):

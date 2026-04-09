@@ -4,10 +4,12 @@ from django.contrib.admin import SimpleListFilter
 from django.http import HttpResponse
 import csv
 
-from .models import CustomCourseEnrollment
+from .models import CustomCourseEnrollment, EventRegistration
 
+admin.site.register(EventRegistration)
 
 # ✅ Custom Filters
+
 
 class ModeLocationFilter(SimpleListFilter):
     title = "Mode Type"

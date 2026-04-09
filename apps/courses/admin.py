@@ -1,8 +1,11 @@
 from django.contrib import admin
 from .models import Course, CourseRegistration
 
-# Register your models here.
-admin.site.register(Course)
+
+
+@admin.register(Course)
+class CourseAdmin(admin.ModelAdmin):
+    search_fields = ("name", "code")
 
 
 @admin.register(CourseRegistration)

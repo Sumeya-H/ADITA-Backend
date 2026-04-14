@@ -25,60 +25,94 @@ class EventRegistrationRetrieveSerializer(serializers.ModelSerializer):
         fields = ["id", "full_name", "email", "attendance_type"]
 
 
-def send_course_confirmation_email(self, registrant_name, recipient_email, program_name="Introduction to Artificial Intelligence Course"):
-    subject = f"Course Enrollment Confirmation – {program_name}"
+def send_course_confirmation_email(self, registrant_name, recipient_email, registration_id):
+    subject = f"Confirm your attendance for the AI For Leaders Seminar"
 
     # HTML email content with inline styles and background image
     html_content = f"""
     <!DOCTYPE html>
+
     <html>
     <head>
       <meta charset="UTF-8">
-      <title>Course Enrollment Confirmation</title>
+      <title>Confirm Your Attendance</title>
     </head>
-    <body style="font-family: Arial, sans-serif; background-color: #f4f4f9; color: #333333; padding: 20px;">
-      <table style="width: 100%; max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; padding: 30px;">
-        <tr>
-          <td style="background-image: url('https://aditacademy.co/images/courses/introduction-to-artificial-intelligence.webp'); background-size: cover; background-position: center; color: white; padding: 60px 20px; text-align: center; border-radius: 8px 8px 0 0; position: relative;">
-            <!-- Overlay to ensure readability -->
-            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); border-radius: 8px 8px 0 0;"></div>
-            <h2 style="font-size: 28px; font-weight: bold; z-index: 1; position: relative;">{program_name}</h2>
-            <p style="font-size: 18px; z-index: 1; position: relative;">Enrollment Confirmation</p>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <p style="font-size: 16px; color: #666666;">Dear <strong>{registrant_name},</strong></p>
-            <p style="font-size: 16px; color: #666666;">We are pleased to inform you that your registration for the <strong>{program_name}</strong> has been successfully received.</p>
 
-            <div style="margin-top: 20px;">
-              <h3 style="font-size: 18px; font-weight: 600; color: #333333;">Course Details:</h3>
-              <p style="font-size: 16px; color: #666666;"><strong>Duration:</strong> 4 weeks, with 8 hours of training per week.</p>
-              <p style="font-size: 16px; color: #666666;"><strong>Start Date:</strong> <span style="font-weight: bold; color: #0066cc;">Thursday, February 19</span></p>
-              <p style="font-size: 16px; color: #666666;"><strong>Location:</strong> <a href="https://maps.app.goo.gl/9wSnR8WJaHSmFYeH7" style="color: #0066cc;" target="_blank">Federal Technical and Vocational Training Institute (FTVTI)</a> (In-person classes).</p>
-              <p style="font-size: 16px; color: #666666;"><strong>For Online Classes:</strong> You will be provided with the LMS link prior to the start date.</p>
-            </div>
+    <body style="margin:0; padding:0; font-family: Arial, sans-serif; background:#f4f4f4;">
 
-            <div style="margin-top: 20px;">
-              <h3 style="font-size: 18px; font-weight: 600; color: #333333;">Payment Details:</h3>
-              <ul style="font-size: 16px; color: #666666; padding-left: 20px;">
-                <li><strong>Original Course Fee:</strong> <span style="font-weight: bold; color: #0066cc;">10,000 Birr</span></li>
-                <li><strong>Promotional Discount:</strong> <span style="font-weight: bold; color: #0066cc;">25%</span></li>
-                <li><strong>Final Discounted Price:</strong> <span style="font-weight: bold; color: #0066cc;">7,500 Birr</span></li>
-                <li><strong>Bank:</strong> Bank of Abyssinia</li>
-                <li><strong>Account Name:</strong> AFIRICAN DIGITAL AND INNOVATION TECHNOLOGY ACADEMY</li>
-                <li><strong>Account Number:</strong> 229456048</li>
+      <table width="100%" cellpadding="0" cellspacing="0" style="padding:20px 0;">
+        <tr>
+          <td align="center">
+
+        <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff; border-radius:10px; overflow:hidden;">
+
+          <!-- Header -->
+          <tr>
+            <td style="background:#0f172a; padding:20px; text-align:center; color:#ffffff;">
+              <h2 style="margin:0;">AI For Leaders Seminar</h2>
+            </td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td style="padding:30px; color:#333333;">
+
+              <h3 style="margin-top:0;">Hello {registrant_name},</h3>
+
+              <p>
+                Thank you for registering for the <strong>AI For Leaders Seminar</strong>.
+                We are excited to have you join us.
+              </p>
+
+              <p>
+                To help us prepare properly, please confirm how you will attend the seminar:
+              </p>
+
+              <!-- CTA Button -->
+              <div style="text-align:center; margin:30px 0;">
+                <a href="https://yourdomain.com/attendance-confirmation?registration_id={registration_id}"
+                   style="background:#2563eb; color:#ffffff; padding:14px 22px; text-decoration:none; border-radius:6px; font-weight:bold; display:inline-block;">
+                  Confirm Your Attendance
+                </a>
+              </div>
+
+              <p>
+                You will be able to choose between:
+              </p>
+
+              <ul>
+                <li>📍 In-person attendance (venue details will be sent later)</li>
+                <li>💻 Virtual attendance (meeting link will be shared before the event)</li>
               </ul>
-              <p style="font-size: 16px; color: #666666;">After making the payment, kindly send a payment screenshot to our Telegram account: <a href="https://t.me/adit_academy?direct" style="color: #0066cc;" target="_blank">@adit_academy</a></p>
-            </div>
 
-            <a href="https://t.me/adit_academy?direct" style="display: inline-block; background-color: #0066cc; color: #ffffff; font-size: 16px; font-weight: bold; padding: 12px 20px; border-radius: 5px; text-align: center; text-decoration: none; margin-top: 20px;" target="_blank">Confirm Payment</a>
+              <p style="margin-top:25px;">
+                This helps us ensure you get the correct access and event information.
+              </p>
 
-            <div style="font-size: 14px; text-align: center; color: #999999; margin-top: 20px;">
-              <p>© 2025 Adita Academy. All rights reserved.</p>
-            </div>
-          </td>
-        </tr>
+              <p>
+                If you did not register for this event, you can safely ignore this email.
+              </p>
+
+              <p style="margin-top:30px;">
+                Best regards,<br/>
+                <strong>AI For Leaders Team</strong>
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background:#f1f5f9; padding:15px; text-align:center; font-size:12px; color:#666;">
+              © 2026 AI For Leaders Seminar. All rights reserved.
+            </td>
+          </tr>
+
+        </table>
+
+      </td>
+    </tr>
+
       </table>
 
     </body>
@@ -89,26 +123,25 @@ def send_course_confirmation_email(self, registrant_name, recipient_email, progr
     text_content = f"""
     Hi {registrant_name},
 
-    We are pleased to inform you that your registration for the Introduction to Artificial Intelligence course has been successfully received.
 
-    Course Details:
-    Duration: 4 weeks, with 8 hours of training per week
-    Start Date: Thursday, February 19
-    Location: Federal Technical and Vocational Training Institute (FTVTI) (In-person classes)
-    For Online Classes: You will be provided with the LMS link prior to the start date.
+    Thank you for registering for the AI For Leaders Seminar. We are excited to have you join us.
 
-    Payment Details:
-    Original Course Fee: 10,000 Birr
-    Promotional Discount: 25%
-    Final Discounted Price: 7,500 Birr
+    To help us prepare properly, please confirm how you will attend the seminar by clicking the link below:
 
-    Bank: Bank of Abyssinia
-    Account Name: AFIRICAN DIGITAL AND INNOVATION TECHNOLOGY ACADEMY
-    Account Number: 229456048
+    https://yourdomain.com/attendance-confirmation?registration_id={registration_id}
 
-    After making the payment, kindly send a payment screenshot to our Telegram account: @adit_academy
+    Once you open the link, you will be able to choose:
+    - In-person attendance (venue details will be sent later)
+    - Virtual attendance (meeting link will be shared before the event)
 
-    © 2025 Adita Academy. All rights reserved.
+    This helps us ensure you receive the correct event information.
+
+    If you did not register for this event, you can safely ignore this email.
+
+    Best regards,
+    AI For Leaders Team
+
+    © 2026 AI For Leaders Seminar. All rights reserved.
     """
 
     # Sending the email

@@ -6,7 +6,7 @@ urlpatterns = [
          name="enrollment-create"),
     path("registrations/", EventRegistrationListCreateView.as_view(),
          name="registrations"),
-    path("registration/<uuid:uuid>/",
+    path("registration/<uuid:id>/",
          EventRegistrationRetrieveView.as_view(), name="registration-detail"),
     path("confirm-attendance/", ConfirmAttendanceView.as_view(),
          name="confirm-attendance"),

@@ -21,6 +21,6 @@ class Command(BaseCommand):
         self.stdout.write(
             f"Sending email to Kalab Kassa kalabkassa@gmail.com ...")
         send_course_confirmation_email(
-            None, "Kalab Kassa", "kalabkassa@gmail.com", "0248d745-c990-4593-a99d-a7614e6739f6")
+            None, "Dr. Sultan Feisso", "sultanmeko2@gmail.com", "1389076f-2696-43cd-8b63-e98342b78275")
         self.stdout.write(self.style.SUCCESS(
             f"Successfully sent email to kalab kassa"))

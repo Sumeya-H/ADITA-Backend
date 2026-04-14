@@ -49,7 +49,9 @@ def send_course_confirmation_email(self, registrant_name, recipient_email, regis
           <!-- Header -->
           <tr>
             <td style="background:#0f172a; padding:20px; text-align:center; color:#ffffff;">
+            <div>
               <h2 style="margin:0;">AI For Leaders Seminar</h2>
+              </div>
             </td>
           </tr>
 
@@ -70,7 +72,7 @@ def send_course_confirmation_email(self, registrant_name, recipient_email, regis
 
               <!-- CTA Button -->
               <div style="text-align:center; margin:30px 0;">
-                <a href="https://yourdomain.com/attendance-confirmation?registration_id={registration_id}"
+                <a href="https://aditacademy.co/attendance-confirmation?registration_id={registration_id}"
                    style="background:#2563eb; color:#ffffff; padding:14px 22px; text-decoration:none; border-radius:6px; font-weight:bold; display:inline-block;">
                   Confirm Your Attendance
                 </a>

@@ -22,7 +22,7 @@ class EventRegistrationSerializer(serializers.ModelSerializer):
 class EventRegistrationRetrieveSerializer(serializers.ModelSerializer):
     class Meta:
         model = EventRegistration
-        fields = ["id", "full_name", "email"]
+        fields = ["id", "full_name", "email", "attendance_type"]
 
 
 def send_course_confirmation_email(self, registrant_name, recipient_email, program_name="Introduction to Artificial Intelligence Course"):

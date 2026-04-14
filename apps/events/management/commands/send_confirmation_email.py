@@ -11,14 +11,14 @@ class Command(BaseCommand):
         users = EventRegistration.objects.all()
 
         for user in users:
-           registrant_name = user.full_name
-           self.stdout.write(
-               f"Sending email to {registrant_name} ({user.email})...")
-           send_course_confirmation_email(
-               None, registrant_name, user.email, user.id)
-           self.stdout.write(self.style.SUCCESS(
-               f"Successfully sent email to {registrant_name}"))
-
+            registrant_name = user.full_name
+            if user.email == "kalabkassa@gmail.com":
+                self.stdout.write(
+                    f"Sending email to {registrant_name} ({user.email})...")
+                send_course_confirmation_email(
+                    None, registrant_name, user.email, user.id)
+                self.stdout.write(self.style.SUCCESS(
+                    f"Successfully sent email to {registrant_name}"))
         # self.stdout.write(
         #    f"Sending email to Kalab Kassa kalabkassa@gmail.com ...")
         # send_course_confirmation_email(

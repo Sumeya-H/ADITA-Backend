@@ -31,6 +31,13 @@ class EventRegistration(models.Model):
     organization = models.CharField(max_length=255, blank=True, null=True)
     job_title = models.CharField(max_length=255, blank=True, null=True)
 
+    attendance_type = models.CharField(
+        max_length=20,
+        choices=[("in_person", "In Person"), ("virtual", "Virtual")],
+        null=True,
+        blank=True
+    )
+
     # Extras
     referral = models.CharField(max_length=255, blank=True, null=True)
 

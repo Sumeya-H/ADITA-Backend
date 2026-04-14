@@ -19,6 +19,12 @@ class EventRegistrationSerializer(serializers.ModelSerializer):
         return value
 
 
+class EventRegistrationRetrieveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EventRegistration
+        fields = ["uuid", "full_name", "email"]
+
+
 def send_course_confirmation_email(self, registrant_name, recipient_email, program_name="Introduction to Artificial Intelligence Course"):
     subject = f"Course Enrollment Confirmation – {program_name}"
 
@@ -134,11 +140,18 @@ class EnrollmentSerializer(serializers.ModelSerializer):
         return value
 
     def validate_email(self, value):
-        if CustomCourseEnrollment.objects.filter(email=value).exists():
+        # get program from request data
+        program = self.initial_data.get("program")
+
+        if CustomCourseEnrollment.objects.filter(
+            email=value,
+            program=program
+        ).exists():
             raise serializers.ValidationError({
                 "error": "EMAIL_EXISTS",
-                "message": "An enrollment with this email already exists."
+                "message": "An enrollment with this email already exists for this program."
             })
+
         return value
 
     def validate_phone(self, value):

@@ -18,6 +18,23 @@ class EventRegistrationSerializer(serializers.ModelSerializer):
                 "This email is already registered.")
         return value
 
+    def create(self, validated_data):
+        # Save user first
+        instance = super().create(validated_data)
+
+        try:
+            send_course_confirmation_email(
+                None,
+                registrant_name=instance.full_name,
+                recipient_email=instance.email,
+                registration_id=str(instance.id)
+            )
+        except Exception as e:
+            # Don't break registration if email fails
+            print("Email sending failed:", str(e))
+
+        return instance
+
 
 class EventRegistrationRetrieveSerializer(serializers.ModelSerializer):
     class Meta:

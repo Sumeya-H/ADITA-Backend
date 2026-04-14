@@ -50,7 +50,7 @@ class ConfirmAttendanceView(APIView):
             )
 
         try:
-            registration = EventRegistration.objects.get(uuid=registration_id)
+            registration = EventRegistration.objects.get(id=registration_id)
 
             if registration.attendance_type:
                 return Response(

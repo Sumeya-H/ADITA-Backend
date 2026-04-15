@@ -6,9 +6,33 @@ import csv
 
 from .models import CustomCourseEnrollment, EventRegistration
 
-admin.site.register(EventRegistration)
 
-# ✅ Custom Filters
+class ModeLocationFilterEventRegistration(SimpleListFilter):
+    title = "Mode Type"
+    parameter_name = "mode_type"
+
+    def lookups(self, request, model_admin):
+        return (
+            ("online", "Online Only"),
+            ("physical", "In-Person Only"),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value() == "online":
+            return queryset.filter(attendance_type="virtual")
+        if self.value() == "physical":
+            return queryset.filter(attendance_type="in_person")
+        return queryset
+
+
+class EventRegistrationAdmin(admin.ModelAdmin):
+    list_display = ("full_name", "email", "attendance_type",
+                    "city", "registered_at")
+    list_filter = (ModeLocationFilterEventRegistration,
+                   "city", "registered_at")
+
+
+admin.site.register(EventRegistration, EventRegistrationAdmin)
 
 
 class ModeLocationFilter(SimpleListFilter):

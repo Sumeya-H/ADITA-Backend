@@ -20,7 +20,7 @@ class Command(BaseCommand):
                         None, registrant_name, user.email)
                     self.stdout.write(self.style.SUCCESS(
                         f"Successfully sent email to {registrant_name}"))
-                elif user.attendance_type == "virtual":
+                else:
                     self.stdout.write(
                         f"Sending virtual version email to {registrant_name} ({user.email})...")
                     send_virtual_email(

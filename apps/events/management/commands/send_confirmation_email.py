@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 from django.core.mail import send_mail
 from apps.events.models import CustomCourseEnrollment, EventRegistration
-from apps.events.serializers import send_course_confirmation_email, send_in_person_email, send_virtual_email
+from apps.events.serializers import send_course_confirmation_email, send_in_person_email, send_virtual_email, send_virtual_not_confirmed_email
 
 
 class Command(BaseCommand):
@@ -20,10 +20,17 @@ class Command(BaseCommand):
                         None, registrant_name, user.email)
                     self.stdout.write(self.style.SUCCESS(
                         f"Successfully sent email to {registrant_name}"))
-                else:
+                elif user.attendance_type == "virtual":
                     self.stdout.write(
                         f"Sending virtual version email to {registrant_name} ({user.email})...")
                     send_virtual_email(
+                        None, registrant_name, user.email)
+                    self.stdout.write(self.style.SUCCESS(
+                        f"Successfully sent email to {registrant_name}"))
+                else:
+                    self.stdout.write(
+                        f"Sending virtual version email to {registrant_name} ({user.email})...")
+                    send_virtual_not_confirmed_email(
                         None, registrant_name, user.email)
                     self.stdout.write(self.style.SUCCESS(
                         f"Successfully sent email to {registrant_name}"))

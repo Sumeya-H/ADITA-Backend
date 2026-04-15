@@ -236,6 +236,118 @@ def send_virtual_email(self, registrant_name, recipient_email):
     email.send(fail_silently=False)
 
 
+def send_virtual_not_confirmed_email(self, registrant_name, recipient_email):
+    subject = "Venue & Time – Ethiopian IT Park Public Seminar: AI for Leaders"
+
+    html_content = f"""
+        <!DOCTYPE html>
+
+        <html>
+        <body style="margin:0; padding:0; font-family: Arial, sans-serif; background:#f4f4f4;">
+          <table width="100%" cellpadding="0" cellspacing="0" style="padding:20px 0;">
+            <tr>
+              <td align="center">
+                <table width="600" style="background:#ffffff; border-radius:10px; overflow:hidden;">
+
+              <tr>
+                <td style="background:#0f172a; padding:20px; text-align:center; color:#ffffff;">
+                  <h2 style="margin:0;">AI for Leaders Seminar</h2>
+                </td>
+              </tr>
+
+              <tr>
+                <td style="padding:30px; color:#333;">
+                  <h3>Hello {registrant_name},</h3>
+
+                  <p>
+                    We noticed that you haven’t confirmed your attendance for the
+                    <strong>Ethiopian IT Park Public Seminar – AI for Leaders</strong>.
+                  </p>
+
+                  <p>
+                    To ensure you can still participate, we’ve reserved a <strong>virtual spot</strong> for you.
+                  </p>
+
+                  <p><strong>🕘 Time:</strong> 8:30 AM - 12:10 PM</p>
+
+                  <p><strong>🔗 Join the Seminar:</strong></p>
+
+                  <div style="text-align:center; margin:25px 0;">
+                    <a href="https://us06web.zoom.us/j/81915939455"
+                       style="background:#2563eb; color:#fff; padding:12px 20px; text-decoration:none; border-radius:6px; font-weight:bold;">
+                      Join Zoom Meeting
+                    </a>
+                  </div>
+
+                  <p><strong>Meeting Details:</strong></p>
+                  <p>
+                    Meeting ID: 819 1593 9455
+                  </p>
+
+                  <p>
+                    If you prefer to attend in person, you may still do so, but we recommend joining early to secure your place.
+                  </p>
+
+                  <p>
+                    We look forward to your participation.
+                  </p>
+
+                  <p style="margin-top:30px;">
+                    Best regards,<br/>
+                    <strong>AI For Leaders Team</strong>
+                  </p>
+                </td>
+              </tr>
+
+              <tr>
+                <td style="background:#f1f5f9; padding:15px; text-align:center; font-size:12px; color:#666;">
+                  © 2026 AI For Leaders Seminar
+                </td>
+              </tr>
+
+            </table>
+          </td>
+        </tr>
+
+          </table>
+        </body>
+        </html>
+    """
+
+    text_content = f"""
+        Hello {registrant_name},
+
+        We noticed that you haven’t confirmed your attendance for the Ethiopian IT Park Public Seminar – AI for Leaders.
+
+        To ensure you can still participate, we’ve reserved a virtual spot for you.
+
+        Time:
+        8:30 AM - 12:10 PM
+
+        Join the seminar here:
+        https://us06web.zoom.us/j/81915939455
+
+        Meeting ID: 819 1593 9455
+
+        If you prefer to attend in person, you may still do so, but we recommend arriving early.
+
+        We look forward to your participation.
+
+        Best regards,
+        AI For Leaders Team
+    """
+
+    # Sending the email
+    email = EmailMultiAlternatives(
+        subject=subject,
+        body=text_content,
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        to=[recipient_email],
+    )
+    email.attach_alternative(html_content, "text/html")
+    email.send(fail_silently=False)
+
+
 def send_course_confirmation_email(self, registrant_name, recipient_email, registration_id):
     subject = f"Confirm your attendance for the AI For Leaders Seminar"
 

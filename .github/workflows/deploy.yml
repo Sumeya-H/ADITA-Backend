@@ -32,7 +32,7 @@ jobs:
           username: ${{ secrets.BACKEND_FTP_USERNAME }}
           password: ${{ secrets.BACKEND_FTP_PASSWORD }}
           local-dir: ./
-          server-dir: /api.aditacademy.co/adita-backend/
+          server-dir: /home/aditacoq/api.aditacademy.co/adita-backend/
           exclude: |
             **/.git*
             **/.git*/**

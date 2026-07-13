@@ -1,0 +1,65 @@
+name: Deploy Backend 
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy files via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.BACKEND_FTP_SERVER }}
+          username: ${{ secrets.BACKEND_FTP_USERNAME }}
+          password: ${{ secrets.BACKEND_FTP_PASSWORD }}
+          local-dir: ./
+          server-dir: /api.aditacademy.co/aidta-backend/
+          # Never overwrite these server-side files
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/__pycache__/**
+            **/*.pyc
+            **/db.sqlite3
+            **/.env.production
+            **/media/**
+            **/logs/**
+            **/staticfiles/**
+            **/tmp/**
+            **/stderr.log
+            **/receipts/**
+
+      - name: Restart Passenger via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.BACKEND_SSH_HOST }}
+          username: ${{ secrets.BACKEND_SSH_USERNAME }}
+          password: ${{ secrets.BACKEND_SSH_PASSWORD }}
+          port: ${{ secrets.BACKEND_SSH_PORT }}
+          script: |
+            set -e
+            
+            cd /home/aditacoq/api.aditacademy.co/aidta-backend
+
+            echo "--- Installing/updating dependencies ---"
+            pip install -r requirements.txt --quiet
+
+            echo "--- Running migrations ---"
+            PRODUCTION=1 python manage.py migrate --no-input
+
+            echo "--- Collecting static files ---"
+            PRODUCTION=1 python manage.py collectstatic --no-input --clear
+
+            echo "--- Restarting Passenger ---"
+            mkdir -p tmp
+            touch tmp/restart.txt
+
+            echo "--- Deploy complete ---"

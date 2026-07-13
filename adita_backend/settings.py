@@ -100,6 +100,7 @@ INSTALLED_APPS = [
     'apps.users',
     'apps.courses',
     'apps.events',
+    'apps.bootcamp',
 ]
 
 MIDDLEWARE = [

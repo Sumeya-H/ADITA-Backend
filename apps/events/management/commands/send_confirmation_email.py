@@ -4,7 +4,7 @@ from apps.events.models import CustomCourseEnrollment, EventRegistration
 from apps.events.serializers import send_course_confirmation_email, send_in_person_email, send_virtual_email, send_virtual_not_confirmed_email
 
 LIMIT = 150
-OFFSET = 0 # 👈 change this each time you rerun
+OFFSET = 156 # 👈 change this each time you rerun
 
 class Command(BaseCommand):
     help = 'Send enrollment confirmation emails to all registered users'
